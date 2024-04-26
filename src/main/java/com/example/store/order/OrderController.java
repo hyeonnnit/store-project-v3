@@ -28,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping("/order/{id}")
-    public String orderProduct(){
+    public String order(){
         return "redirect:/";
     }
 
