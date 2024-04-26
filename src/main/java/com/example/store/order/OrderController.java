@@ -18,7 +18,7 @@ public class OrderController {
         return "order/product-list";
     }
 
-    @GetMapping("/order/{id}")
+    @GetMapping("/order/{id}/detail")
     public String orderDetail() {
         return "order/product-detail";
     }
@@ -27,7 +27,7 @@ public class OrderController {
         return "redirect:/order/"+1;
     }
 
-    @PostMapping("/order")
+    @PostMapping("/order/{id}")
     public String orderProduct(){
         return "redirect:/";
     }
