@@ -1,7 +1,5 @@
-package com.example.store;
+package com.example.store.product;
 
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

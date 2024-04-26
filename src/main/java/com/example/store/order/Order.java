@@ -1,6 +1,6 @@
 package com.example.store.order;
 
-import com.example.store.Product;
+import com.example.store.product.Product;
 import com.example.store.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
