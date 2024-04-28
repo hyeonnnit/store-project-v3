@@ -22,6 +22,7 @@ public class OrderController {
     public String orderDetail() {
         return "order/product-detail";
     }
+
     @PostMapping("/order/{id}/update")
     public String orderUpdate() {
         return "redirect:/order/"+1;

@@ -1,5 +1,6 @@
 package com.example.store.user;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,23 +16,26 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public String login() {
+    public String login(UserRequest.LoginDTO reqDTO) {
+        UserResponse.LoginDTO sessionUser = userService.login(reqDTO);
+        session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
 
 
-    @GetMapping("/user/login-form")
+    @GetMapping("/login-form")
     public String loginForm() {
         return "user/login-form";
     }
 
     //회원가입
     @PostMapping("/join")
-    public String userJoin() {
+    public String userJoin(UserRequest.JoinDTO reqDTO) {
+        userService.join(reqDTO);
         return "redirect:/login-form";
     }
 
-    @GetMapping("/user/join-form")
+    @GetMapping("/join-form")
     public String userJoinForm() {
         return "user/join-form";
     }
@@ -41,13 +45,17 @@ public class UserController {
         return "redirect:/login-form";
     }
 
-    @GetMapping("/user/update-form")
-    public String userUpdateForm() {
+    @GetMapping("/update-form")
+    public String userUpdateForm(HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User user = userService.getUser(sessionUser.getId());
+        request.setAttribute("user", user);
         return "user/update-form";
     }
 
     @GetMapping("/logout")
     public String logout() {
+        session.invalidate();
         return "redirect:/";
     }
 }
