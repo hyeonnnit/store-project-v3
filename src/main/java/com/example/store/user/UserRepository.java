@@ -11,6 +11,15 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
     private final EntityManager em;
 
+    public User updateById(int id, UserRequest.UpdateDTO reqDTO){
+        User user = findById(id);
+        user.setAddress(reqDTO.getAddress());
+        user.setBirth(reqDTO.getBirth());
+        user.setEmail(reqDTO.getEmail());
+        user.setTel(reqDTO.getTel());
+        user.setPassword(reqDTO.getPassword());
+        return user;
+    }
     public User findById(int id) {
         User user = em.find(User.class, id);
         return user;

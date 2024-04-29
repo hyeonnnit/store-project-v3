@@ -6,18 +6,6 @@ import java.sql.Date;
 
 public class UserResponse {
 
-    @Data
-    public static class LoginDTO {
-        private Integer id;
-        private String username;
-        private String password;
-
-        public LoginDTO(User user){
-            this.id = user.getId();
-            this.username = user.getUsername();
-            this.password = user.getPassword();
-        }
-    }
 
     @Data
     public static class JoinDTO {

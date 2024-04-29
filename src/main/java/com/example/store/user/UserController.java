@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class UserController {
     //로그인
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
-        UserResponse.LoginDTO sessionUser = userService.login(reqDTO);
+        User sessionUser = userService.login(reqDTO);
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
@@ -41,8 +42,11 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String userUpdate() {
-        return "redirect:/login-form";
+    public String userUpdate(UserRequest.UpdateDTO reqDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.editUser(sessionUser.getId(), reqDTO);
+        session.setAttribute("sessionUser",newSessionUser);
+        return "redirect:/";
     }
 
     @GetMapping("/update-form")

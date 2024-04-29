@@ -1,11 +1,21 @@
 package com.example.store.user;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.sql.Date;
 
 public class UserRequest {
+
+    @Data
+    public static class UpdateDTO{
+        private String username;
+        private String password;
+        private String name;
+        private String email;
+        private String tel;
+        private Date birth;
+        private String address;
+    }
 
     @Data
     public static class LoginDTO {
