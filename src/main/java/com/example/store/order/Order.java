@@ -19,6 +19,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column
     private Integer orderNum;
 
     @ManyToOne(fetch = FetchType.LAZY)

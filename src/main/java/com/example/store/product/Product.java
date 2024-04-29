@@ -27,6 +27,7 @@ public class Product {
     @Column(nullable = false)
     private Integer qty; //수량
 
+
     @Column
     private String pic;
 

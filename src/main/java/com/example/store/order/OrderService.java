@@ -1,6 +1,8 @@
 package com.example.store.order;
 
+import com.example.store.product.Product;
 import com.example.store.product.ProductRepository;
+import com.example.store.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,22 +17,34 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     @Transactional
+    public Order orderSaveProduct(Integer productId, User user, OrderRequest.SaveDTO reqDTO){
+        Product product = productRepository.findById(productId);
+        return orderRepository.save(reqDTO.toEntity(user, product));
+    }
+
+    @Transactional
     public Order editProduct(int id, OrderRequest.UpdateDTO reqDTO){
         return orderRepository.updateById(id, reqDTO);
-
-    }
-    public OrderResponse.OrderDTO getOrderProduct(int productId, int userId){
-        Order order = orderRepository.findByProductIdAndUserId(productId, userId);
-        return new OrderResponse.OrderDTO(order);
     }
 
-    public List<OrderResponse.OrderDTO> getOrderList(int userId){
+    public OrderResponse.DetailDTO getOrderDetail(int productId, User sessionUser){
+        Product product = productRepository.findById(productId);
+        Order order = orderRepository.findByProductIdAndUserId(product, sessionUser);
+        return new OrderResponse.DetailDTO(order);
+    }
+
+    public List<OrderResponse.ListDTO> getOrderList(int userId){
         List<Order> orderList = orderRepository.findProductByUserId(userId);
-        return orderList.stream().map(OrderResponse.OrderDTO::new).collect(Collectors.toList());
+        return orderList.stream().map(OrderResponse.ListDTO::new).collect(Collectors.toList());
     }
 
-    public Order getOrder(int productId, int userId){
-        return orderRepository.findByProductIdAndUserId(productId, userId);
+    public Product getOrderProduct(int productId){
+        Product product = productRepository.findById(productId);
+        return product;
     }
 
+    @Transactional
+    public void deleteOrder(int id){
+        orderRepository.deleteById(id);
+    }
 }

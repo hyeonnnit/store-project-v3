@@ -17,9 +17,19 @@ import java.util.List;
 public class OrderRepository {
     private final EntityManager em;
 
+    public void deleteById(int id){
+        Query query = em.createQuery("DELETE FROM Order o where o.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    public Order save(Order order){
+        em.persist(order);
+        return order;
+    }
     public Order updateById(int id, OrderRequest.UpdateDTO reqDTO){
         Order order = findById(id);
-       order.setOrderNum(reqDTO.getOrderNum());
+        order.setOrderNum(reqDTO.getOrderNum());
         return order;
     }
 
@@ -28,10 +38,10 @@ public class OrderRepository {
         return order;
     }
 
-    public Order findByProductIdAndUserId(int productId, int userId) {
+    public Order findByProductIdAndUserId(Product product, User user) {
         Query query = em.createQuery("select o from Order o JOIN FETCH o.product p JOIN FETCH o.user u WHERE p.id =:product_id and u.id =:user_id");
-        query.setParameter("product_id", productId);
-        query.setParameter("user_id", userId);
+        query.setParameter("product_id", product.getId());
+        query.setParameter("user_id", user.getId());
         return (Order) query.getSingleResult();
     }
 
