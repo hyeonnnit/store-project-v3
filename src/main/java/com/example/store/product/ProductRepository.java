@@ -12,12 +12,12 @@ import java.util.List;
 public class ProductRepository {
     private final EntityManager em;
 
-    public ProductResponse.DetailDTO findById(int id) {
+    public Product findById(int id) {
         Product product = em.find(Product.class, id);
-        return new ProductResponse.DetailDTO(product);
+        return product;
     }
 
-    public List<ProductResponse.ListDTO> findAll() {
+    public List<Product> findAll() {
         Query query =
                 em.createQuery("select p from Product p order by p.id desc", Product.class);
         return query.getResultList();

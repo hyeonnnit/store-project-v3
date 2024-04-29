@@ -19,6 +19,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer orderNum;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -29,8 +31,9 @@ public class Order {
     private LocalDateTime createdAt;
 
     @Builder
-    public Order(Integer id, User user, Product product, LocalDateTime createdAt) {
+    public Order(Integer id, User user, Product product, Integer orderNum, LocalDateTime createdAt) {
         this.id = id;
+        this.orderNum = orderNum;
         this.user = user;
         this.product = product;
         this.createdAt = createdAt;
