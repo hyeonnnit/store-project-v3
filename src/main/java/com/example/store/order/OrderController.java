@@ -62,7 +62,7 @@ public class OrderController {
     public String order(@PathVariable Integer id, OrderRequest.SaveDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
         orderService.orderSaveProduct(id, sessionUser, reqDTO);
-        return "redirect:/";
+        return "redirect:/orders";
     }
 
     @PostMapping("/order/{id}/delete")
