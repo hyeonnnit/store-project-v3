@@ -16,6 +16,7 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
 
+
     @Transactional
     public Order orderSaveProduct(Integer productId, User user, OrderRequest.SaveDTO reqDTO){
         Product product = productRepository.findById(productId);
@@ -23,7 +24,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order editProduct(int id, OrderRequest.UpdateDTO reqDTO){
+    public Order editProduct( int id, OrderRequest.UpdateDTO reqDTO){
         return orderRepository.updateById(id, reqDTO);
     }
 

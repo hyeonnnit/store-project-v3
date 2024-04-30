@@ -1,5 +1,7 @@
 package com.example.store.product;
 
+import com.example.store.order.Order;
+import com.example.store.order.OrderRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductRepository {
     private final EntityManager em;
+    private final OrderRepository orderRepository;
+
+
 
     public Product findById(int id) {
         Product product = em.find(Product.class, id);

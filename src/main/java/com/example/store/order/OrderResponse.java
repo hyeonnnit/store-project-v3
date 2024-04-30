@@ -18,6 +18,7 @@ public class OrderResponse {
         private String pic;
         private Integer orderNum;
 
+
         public DetailDTO(Order order){
             this.id = order.getProduct().getId();
             this.user=order.getUser();

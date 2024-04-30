@@ -38,9 +38,9 @@ public class OrderController {
     @PostMapping("/order/{id}/update")
     public String orderUpdate(@PathVariable Integer id, OrderRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        Order order = orderService.editProduct(sessionUser.getId(), reqDTO);
+        Order order = orderService.editProduct(sessionUser.getId(),reqDTO);
         session.setAttribute("newOrder", order );
-        return "redirect:/order/"+id+"/detail";
+        return "redirect:/orders";
     }
 
     @GetMapping("/order/{id}/update-form")

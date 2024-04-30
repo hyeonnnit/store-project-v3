@@ -1,6 +1,7 @@
 package com.example.store.order;
 
 import com.example.store.product.Product;
+import com.example.store.product.ProductRepository;
 import com.example.store.product.ProductResponse;
 import com.example.store.user.User;
 import com.example.store.user.UserRequest;
