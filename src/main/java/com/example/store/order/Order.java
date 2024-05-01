@@ -22,6 +22,9 @@ public class Order {
     @Column(nullable = false)
     private Integer orderNum;
 
+    @Column
+    private Integer priceSum;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -32,9 +35,10 @@ public class Order {
     private LocalDateTime createdAt;
 
     @Builder
-    public Order(Integer id, User user, Product product, Integer orderNum, LocalDateTime createdAt) {
+    public Order(Integer id, User user, Product product, Integer priceSum, Integer orderNum, LocalDateTime createdAt) {
         this.id = id;
         this.orderNum = orderNum;
+        this.priceSum = priceSum;
         this.user = user;
         this.product = product;
         this.createdAt = createdAt;

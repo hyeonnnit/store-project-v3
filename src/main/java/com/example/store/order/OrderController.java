@@ -27,34 +27,32 @@ public class OrderController {
         return "order/product-list";
     }
 
-    @GetMapping("/order/{id}/detail")
-    public String orderDetail(@PathVariable Integer id, HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        OrderResponse.DetailDTO order = orderService.getOrderDetail(id, sessionUser);
-        request.setAttribute("order",order);
-        return "order/product-detail";
-    }
+//    @GetMapping("/order/{id}/detail")
+//    public String orderDetail(@PathVariable Integer id, HttpServletRequest request) {
+//        OrderResponse.DetailDTO order = orderService.getOrderDetail(id);
+//        request.setAttribute("order",order);
+//        return "order/product-detail";
+//    }
 
-    @PostMapping("/order/{id}/update")
-    public String orderUpdate(@PathVariable Integer id, OrderRequest.UpdateDTO reqDTO) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        Order order = orderService.editProduct(sessionUser.getId(),reqDTO);
-        session.setAttribute("newOrder", order );
-        return "redirect:/orders";
-    }
-
-    @GetMapping("/order/{id}/update-form")
-    public String orderUpdateForm(@PathVariable Integer id, HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        OrderResponse.DetailDTO order = orderService.getOrderDetail(id, sessionUser);
-        request.setAttribute("order", order);
-        return "order/product-update-form";
-    }
+//    @PostMapping("/order/{id}/update")
+//    public String orderUpdate(@PathVariable Integer id, OrderRequest.UpdateDTO reqDTO) {
+//        orderService.editProduct(id,reqDTO);
+//        return "redirect:/orders";
+//    }
+//
+//    @GetMapping("/order/{id}/update-form")
+//    public String orderUpdateForm(@PathVariable Integer id, HttpServletRequest request) {
+//        User sessionUser = (User) session.getAttribute("sessionUser");
+//        OrderResponse.DetailDTO order = orderService.getOrderUpdate(id,sessionUser);
+//        request.setAttribute("order", order);
+//        return "order/product-update-form";
+//    }
 
     @GetMapping("/order/{id}/product-form")
     public String orderForm(@PathVariable Integer id, HttpServletRequest request){
-        Product product = orderService.getOrderProduct(id);
-        request.setAttribute("product", product);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        OrderResponse.DetailDTO order = orderService.getOrderDetail(id);
+        request.setAttribute("order", order);
         return "order/product-order-form";
     }
 
@@ -65,10 +63,10 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/order/{id}/delete")
-    public String orderDelete(@PathVariable Integer id) {
-        orderService.deleteOrder(id);
-        return "redirect:/orders";
-    }
+//    @PostMapping("/order/{id}/delete")
+//    public String orderDelete(@PathVariable Integer id) {
+//        orderService.deleteOrder(id);
+//        return "redirect:/orders";
+//    }
 
 }

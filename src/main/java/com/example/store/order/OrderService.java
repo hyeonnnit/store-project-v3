@@ -3,8 +3,10 @@ package com.example.store.order;
 import com.example.store.product.Product;
 import com.example.store.product.ProductRepository;
 import com.example.store.user.User;
+import com.example.store.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,22 +17,36 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
 
     @Transactional
-    public Order orderSaveProduct(Integer productId, User user, OrderRequest.SaveDTO reqDTO){
+    public OrderResponse.DetailDTO orderSaveProduct(Integer productId, User user, OrderRequest.SaveDTO reqDTO){
         Product product = productRepository.findById(productId);
-        return orderRepository.save(reqDTO.toEntity(user, product));
+        if (product.getQty() < reqDTO.getOrderNum()) {
+            throw new IllegalArgumentException("재고가 부족합니다.");
+        }
+        product.setQty(product.getQty() - reqDTO.getOrderNum());
+        productRepository.update(product);
+        Order order = orderRepository.save(reqDTO.toEntity(user, product));
+        order.setPriceSum(product.getPrice()*reqDTO.getOrderNum());
+        return new OrderResponse.DetailDTO(order);
     }
 
-    @Transactional
-    public Order editProduct( int id, OrderRequest.UpdateDTO reqDTO){
-        return orderRepository.updateById(id, reqDTO);
-    }
+//    @Transactional
+//    public Order editProduct( int id, OrderRequest.UpdateDTO reqDTO){
+//        Order order = orderRepository.updateById(id, reqDTO);
+//        return order;
+//    }
+//
+//    public OrderResponse.DetailDTO getOrderUpdate(int productId, User user){
+//        Product product = productRepository.findById(productId);
+//        Order order = orderRepository.findByOrderId(user, product);
+//        return new OrderResponse.DetailDTO(order);
+//    }
 
-    public OrderResponse.DetailDTO getOrderDetail(int productId, User sessionUser){
-        Product product = productRepository.findById(productId);
-        Order order = orderRepository.findByProductIdAndUserId(product, sessionUser);
+    public OrderResponse.DetailDTO getOrderDetail(int id){
+        Order order = orderRepository.findByProductId(id);
         return new OrderResponse.DetailDTO(order);
     }
 
@@ -39,9 +55,9 @@ public class OrderService {
         return orderList.stream().map(OrderResponse.ListDTO::new).collect(Collectors.toList());
     }
 
-    public Product getOrderProduct(int productId){
-        Product product = productRepository.findById(productId);
-        return product;
+    public OrderResponse.DetailDTO getOrderProduct(int productId, int userId){
+        Order order = orderRepository.findByOrderId(productId, userId);
+        return new OrderResponse.DetailDTO(order);
     }
 
     @Transactional

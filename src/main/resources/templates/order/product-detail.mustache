@@ -18,9 +18,12 @@
             <div class="mb-3 mt-3">
                 구매수량 : <input name="orderNum" type="number" class="form-control" value="{{orderNum}}" readonly>
             </div>
+            <div class="mb-3 mt-3">
+                구매수량 : <input name="priceSum" type="number" class="form-control" value="{{priceSum}}" readonly>
+            </div>
             <div class="d-flex justify-content-center">
-                <span><form action="/order/{{id}}/update-form" >
-                    <button class="btn btn-danger mt-3">수량 수정</button>
+                <span><form action="/orders" >
+                    <button class="btn btn-danger mt-3">주문 목록</button>
                 </form>
                 </span>
             </div>

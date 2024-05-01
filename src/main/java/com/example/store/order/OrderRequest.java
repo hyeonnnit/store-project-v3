@@ -6,18 +6,20 @@ import lombok.Data;
 
 public class OrderRequest {
 
-    @Data
-    public static class UpdateDTO{
-        private Integer orderNum;
-    }
+//    @Data
+//    public static class UpdateDTO{
+//        private Integer orderNum;
+//    }
 
     @Data
     public static class SaveDTO{
         private Integer orderNum;
+        private Integer priceSum;
         public Order toEntity(User user, Product product){
             return Order.builder()
                     .user(user)
                     .product(product)
+                    .priceSum(priceSum)
                     .orderNum(orderNum)
                     .build();
         }

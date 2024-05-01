@@ -6,7 +6,6 @@ import lombok.Data;
 
 public class OrderResponse {
 
-
     @Data
     public static class DetailDTO{
         private int id;
@@ -17,6 +16,8 @@ public class OrderResponse {
         private int qty;
         private String pic;
         private Integer orderNum;
+        private Integer priceSum;
+
 
 
         public DetailDTO(Order order){
@@ -24,6 +25,7 @@ public class OrderResponse {
             this.user=order.getUser();
             this.product=order.getProduct();
             this.orderNum = order.getOrderNum();
+            this.priceSum = order.getPriceSum();
             this.name = order.getProduct().getName();
             this.price = order.getProduct().getPrice();
             this.qty = order.getProduct().getQty();
@@ -39,10 +41,12 @@ public class OrderResponse {
         private int qty;
         private String pic;
         private Integer orderNum;
+        private Integer priceSum;
 
         public ListDTO(Order order){
             this.id = order.getProduct().getId();
             this.orderNum = order.getOrderNum();
+            this.priceSum = order.getPriceSum();
             this.name = order.getProduct().getName();
             this.price = order.getProduct().getPrice();
             this.qty = order.getProduct().getQty();

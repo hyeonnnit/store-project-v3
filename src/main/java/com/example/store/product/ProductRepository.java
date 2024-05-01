@@ -4,6 +4,7 @@ import com.example.store.order.Order;
 import com.example.store.order.OrderRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductRepository {
     private final EntityManager em;
-    private final OrderRepository orderRepository;
 
-
+    @Transactional
+    public void update(Product product) {
+        em.merge(product);
+    }
 
     public Product findById(int id) {
         Product product = em.find(Product.class, id);
