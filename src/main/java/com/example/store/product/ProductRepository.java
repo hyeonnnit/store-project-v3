@@ -1,10 +1,8 @@
 package com.example.store.product;
 
-import com.example.store.order.Order;
-import com.example.store.order.OrderRepository;
+import com.example.store._core.common.PicSaveUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,19 +13,34 @@ import java.util.List;
 public class ProductRepository {
     private final EntityManager em;
 
-    @Transactional
-    public void update(Product product) {
-        em.merge(product);
-    }
 
-    public Product findById(int id) {
+    public Product updateById(int id, ProductRequest.UpdateDTO reqDTO) {
         Product product = em.find(Product.class, id);
+        product.setName(reqDTO.getName());
+        product.setPrice(reqDTO.getPrice());
+        product.setQty(product.getQty());
+        product.setPic(PicSaveUtil.save(reqDTO.getPic()));
         return product;
     }
 
-    public List<Product> findAll() {
+    public void deleteById(int id) {
         Query query =
-                em.createQuery("select p from Product p order by p.id desc", Product.class);
+                em.createQuery("delete from Product p where p.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    public Product save(Product product) {
+        em.persist(product);
+        return product;
+    }
+
+    public Product findById(int id) {
+        return em.find(Product.class, id);
+    }
+
+    public List<Product> findAll() {
+        Query query = em.createQuery("SELECT p FROM Product p ORDER BY p.id desc", Product.class);
         return query.getResultList();
     }
 }

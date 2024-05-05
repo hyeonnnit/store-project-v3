@@ -3,6 +3,39 @@ package com.example.store.product;
 import lombok.Data;
 
 public class ProductResponse {
+    @Data
+    public static class UpdateDTO{
+        private int id;
+        private String name;
+        private int price ;
+        private int qty;
+        private String pic;
+
+        public UpdateDTO(Product product){
+            this.id = product.getId();
+            this.name = product.getName();
+            this.price = product.getPrice();
+            this.qty = product.getQty();
+            this.pic = product.getPic();
+        }
+    }
+
+    @Data
+    public static class SaveDTO{
+        private int id;
+        private String name;
+        private int price ;
+        private int qty;
+        private String pic;
+
+        public SaveDTO(Product product){
+            this.id = product.getId();
+            this.name = product.getName();
+            this.price = product.getPrice();
+            this.qty = product.getQty();
+            this.pic = product.getPic();
+        }
+    }
 
     @Data
     public static class DetailDTO{
@@ -25,7 +58,7 @@ public class ProductResponse {
     public static class ListDTO{
         private int id;
         private String name;
-        private int price ;
+        private int price;
         private int qty;
 
         public ListDTO(Product product){
