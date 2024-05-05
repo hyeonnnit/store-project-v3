@@ -27,7 +27,7 @@ public class OrderService {
             throw new IllegalArgumentException("재고가 부족합니다.");
         }
         product.setQty(product.getQty() - reqDTO.getOrderNum());
-        productRepository.update(product);
+        productRepository.updateQty(product);
         Order order = orderRepository.save(reqDTO.toEntity(user, product));
         order.setPriceSum(product.getPrice()*reqDTO.getOrderNum());
         return new OrderResponse.DetailDTO(order);

@@ -3,6 +3,7 @@ package com.example.store.product;
 import com.example.store._core.common.PicSaveUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,10 @@ import java.util.List;
 public class ProductRepository {
     private final EntityManager em;
 
+    @Transactional
+    public void updateQty(Product product) {
+        em.merge(product);
+    }
 
     public Product updateById(int id, ProductRequest.UpdateDTO reqDTO) {
         Product product = em.find(Product.class, id);
