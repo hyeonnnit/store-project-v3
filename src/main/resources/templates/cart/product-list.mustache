@@ -4,7 +4,7 @@
 
     <br>
     <ul class="row row-cols-4 gap-3">
-        {{#orderList}}
+        {{#cartList}}
             <li class="card col border p-5 rounded m-3" style="width: 15rem; padding: 0px !important; border: 0">
 <!--                <a href="/order/id/detail" style="text-decoration: none; color: black">-->
                     <div style="width: 100%; height: 15rem; overflow: hidden">
@@ -19,8 +19,8 @@
                             overflow: hidden;
                             text-overflow: ellipsis;
                           "><b>{{name}}</b></h5>
-                        <h6><span>구매 금액</span> | <span>{{priceSum}}원</span></h6>
-                        <h6><span>구매수량</span> | <span>{{orderNum}}</span></h6>
+                        <h6><span>구매 금액</span> | <span>{{totalPrice}}원</span></h6>
+                        <h6><span>구매수량</span> | <span>{{orderQty}}</span></h6>
                     </div>
 <!--                </a>-->
 <!--                <div class="d-flex justify-content-center">-->
@@ -29,7 +29,7 @@
 <!--                    </form>-->
 <!--                </div>-->
             </li>
-        {{/orderList}}
+        {{/cartList}}
 
 
     </ul>

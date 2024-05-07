@@ -1,6 +1,7 @@
-package com.example.store.order;
+package com.example.store.orderItem;
 
-import com.example.store.cart.Cart;
+
+import com.example.store.order.Order;
 import com.example.store.product.Product;
 import com.example.store.user.User;
 import jakarta.persistence.*;
@@ -12,9 +13,9 @@ import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Data
-@Table(name = "order_tb")
+@Table(name = "order_item_tb")
 @Entity
-public class Order {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,25 +27,17 @@ public class Order {
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Cart cart;
-
-    @Column
-    private Integer sum;
-
-    @Column
-    private String status;      // 주문 상태 -> true: 주문 완료, false: 주문 취소
+    private Order order;
 
 //    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Order(Integer id, User user, Product product, Cart cart, Integer sum, String status, Timestamp createdAt) {
+    public OrderItem(Integer id, User user, Product product, Order order, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.product = product;
-        this.cart = cart;
-        this.sum = sum;
-        this.status = status;
+        this.order = order;
         this.createdAt = createdAt;
     }
 }

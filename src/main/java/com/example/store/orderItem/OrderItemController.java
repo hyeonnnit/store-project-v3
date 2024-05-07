@@ -1,4 +1,4 @@
-package com.example.store.order;
+package com.example.store.orderItem;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -8,25 +8,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Controller
-public class OrderController {
-    private final OrderService orderService;
+public class OrderItemController {
+
+    private final OrderItemService orderItemService;
     private final HttpSession session;
 
-    // 주문 목록
-    @GetMapping({"/order-list"})
+    // 주문 결과 목록
+    @GetMapping({"/item-list"})
     public String list() {
         return "";
     }
 
-    // 주문하기
-    @PostMapping("/order/{id}")
+    // 주문 결과 전송
+    @PostMapping("/item/{id}")
     public String order() {
-        return "redirect:/order-list";
-    }
-
-    // 삭제하기
-    @PostMapping("/order/{id}/delete")
-    public String delete() {
-        return "";
+        return "redirect:/item-list";
     }
 }

@@ -1,6 +1,5 @@
-package com.example.store.order;
+package com.example.store.cart;
 
-import com.example.store.cart.Cart;
 import com.example.store.product.Product;
 import com.example.store.user.User;
 import jakarta.persistence.*;
@@ -12,39 +11,37 @@ import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Data
-@Table(name = "order_tb")
+@Table(name = "cart_tb")
 @Entity
-public class Order {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // 주문을 여러번 할수 있다.
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    // 여러번 상품을 주문할 수 있다.
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Cart cart;
+    @Column(nullable = false)
+    private Integer orderQty;   // 주문 수량
 
     @Column
-    private Integer sum;
-
-    @Column
-    private String status;      // 주문 상태 -> true: 주문 완료, false: 주문 취소
+    private Integer totalPrice;   // 구매 총 가격
 
 //    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Order(Integer id, User user, Product product, Cart cart, Integer sum, String status, Timestamp createdAt) {
+    public Cart(Integer id, User user, Product product, Integer orderQty, Integer totalPrice, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.product = product;
-        this.cart = cart;
-        this.sum = sum;
-        this.status = status;
+        this.orderQty = orderQty;
+        this.totalPrice = totalPrice;
         this.createdAt = createdAt;
     }
 }

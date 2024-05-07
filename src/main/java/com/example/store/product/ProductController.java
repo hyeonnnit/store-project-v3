@@ -16,7 +16,7 @@ public class ProductController {
     private final ProductService productService;
 
 
-    @GetMapping("/product")
+    @GetMapping("/")
     public String list(HttpServletRequest request) {
         List<ProductResponse.ListDTO> productList = productService.getProductList();
         request.setAttribute("productList", productList);

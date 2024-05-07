@@ -1,19 +1,19 @@
 {{> layout/header}}
-<form action="/order/{{id}}/product" method="post">
+<form action="/cart/{{id}}/save" method="post">
     <div class="d-flex justify-content-center" style="margin-top: 100px; margin-bottom: 200px;">
             <div class="p-3 m-3" style="width: 300px;">
-                <img src="/images/{{order.pic}}" width="300" height="300">
+                <img src="/images/{{cart.pic}}" width="300" height="300">
             </div>
 
             <div class="p-3 m-3" style="width: 300px;">
                 <div class="mb-3 mt-3">
-                    상 품 명 : <input name="name" type="text" class="form-control" value="{{order.name}}" readonly>
+                    상 품 명 : <input name="name" type="text" class="form-control" value="{{cart.name}}" readonly>
                 </div>
                 <div class="mb-3 mt-3">
-                    상품가격 : <input name="price" type="number" class="form-control" value="{{order.price}}" readonly>
+                    상품가격 : <input name="price" type="number" class="form-control" value="{{cart.price}}" readonly>
                 </div>
                 <div class="mb-3 mt-3">
-                    상품수량 : <input name="qty" type="number" class="form-control" value="{{order.qty}}" readonly>
+                    상품수량 : <input name="qty" type="number" class="form-control" value="{{cart.qty}}" readonly>
                 </div>
                 <div class="mb-3 mt-3">
                     구매수량 : <input name="orderNum" type="number" class="form-control" >
