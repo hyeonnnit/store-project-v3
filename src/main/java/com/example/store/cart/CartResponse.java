@@ -1,6 +1,5 @@
 package com.example.store.cart;
 
-import com.example.store.order.Order;
 import com.example.store.product.Product;
 import com.example.store.user.User;
 import lombok.Data;
@@ -16,7 +15,6 @@ public class CartResponse {
         private int qty;
         private String pic;
         private Integer orderQty;
-        private Integer totalPrice;
 
 
 
@@ -25,7 +23,6 @@ public class CartResponse {
             this.user=cart.getUser();
             this.product=cart.getProduct();
             this.orderQty = cart.getOrderQty();
-            this.totalPrice = cart.getTotalPrice();
             this.name = cart.getProduct().getName();
             this.price = cart.getProduct().getPrice();
             this.qty = cart.getProduct().getQty();
@@ -35,22 +32,20 @@ public class CartResponse {
 
     @Data
     public static class ListDTO{
-        private int id;
+        private int cartId;
         private User user;
-        private Product product;
+        private Integer productId;
         private String name;
         private int price ;
         private int qty;
         private String pic;
         private Integer orderQty;
-        private Integer totalPrice;
 
         public ListDTO(Cart cart){
-            this.id = cart.getId();
+            this.cartId = cart.getId();
             this.user=cart.getUser();
-            this.product=cart.getProduct();
+            this.productId=cart.getProduct().getId();
             this.orderQty = cart.getOrderQty();
-            this.totalPrice = cart.getTotalPrice();
             this.name = cart.getProduct().getName();
             this.price = cart.getProduct().getPrice();
             this.qty = cart.getProduct().getQty();

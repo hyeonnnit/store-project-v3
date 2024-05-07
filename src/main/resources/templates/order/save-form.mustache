@@ -1,0 +1,43 @@
+{{> layout/header}}
+
+<div class="container">
+
+    <table class="table table-hover offer-table scroll" style="text-align: center; border-top:2px solid #ddd">
+        <br>
+        <h2>주문 목록</h2>
+        <br>
+
+
+    <thead>
+
+        <th class="center-align col-1">No</th>
+        <th class="center-align col-5">상품명</th>
+        <th class="center-align col-2">상품가격</th>
+        <th class="center-align col-2">구매수량</th>
+        <th class="center-align col-2">구매금액</th>
+        </tr>
+        </thead>
+            <tbody>
+        {{#orderList}}
+            <tr class="offer-table">
+                <th scope="row">{{id}}</th>
+                <td>{{name}}</td>
+                <td>{{price}}</td>
+                <td>{{orderQty}}</td>
+                <!--                <td>totalPrice</td>-->
+            </tr>
+        {{/orderList}}
+
+            </tbody>
+
+    </table>
+    <div class="flex-fill">
+        <span style="padding-right: 40px;">합계 (원)</span>
+        <!--            <strong class="sum">sum</strong>-->
+    </div>
+
+
+</div>
+
+<div style="margin-bottom: 25%"></div>
+{{> layout/footer}}

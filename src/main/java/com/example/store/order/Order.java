@@ -23,10 +23,10 @@ public class Order {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private Cart cart;
+
+    @Column
+    private Integer totalPrice;   // 구매 가격
 
     @Column
     private Integer sum;
@@ -38,12 +38,12 @@ public class Order {
     private Timestamp createdAt;
 
     @Builder
-    public Order(Integer id, User user, Product product, Cart cart, Integer sum, String status, Timestamp createdAt) {
+    public Order(Integer id, User user, Cart cart, Integer totalPrice, Integer sum, String status, Timestamp createdAt) {
         this.id = id;
         this.user = user;
-        this.product = product;
         this.cart = cart;
         this.sum = sum;
+        this.totalPrice = totalPrice;
         this.status = status;
         this.createdAt = createdAt;
     }

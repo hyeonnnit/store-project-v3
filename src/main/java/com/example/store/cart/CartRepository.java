@@ -14,13 +14,21 @@ import java.util.List;
 public class CartRepository {
     private final EntityManager em;
 
-
+    public void deleteById(Integer id){
+        Query query = em.createQuery("delete from Cart c where c.id= :id");
+        query.setParameter("id",id);
+        query.executeUpdate();
+    }
     public Cart save(Cart cart){
         em.persist(cart);
         return cart;
     }
 
-
+    public Cart findById(int id){
+        Query query = em.createQuery("select c from Cart c JOIN FETCH c.user u where u.id= :id");
+        query.setParameter("id", id);
+        return (Cart) query.getSingleResult();
+    }
     public Cart findByProductId(int id) {
         Query query = em.createQuery("select c from Cart c JOIN FETCH c.product p WHERE p.id =:id");
         query.setParameter("id", id);
@@ -29,7 +37,7 @@ public class CartRepository {
 
     public List<Cart> findProductByUserId(int userId) {
         Query query =
-                em.createQuery("select c from Cart c JOIN FETCH c.product p JOIN FETCH c.user u WHERE u.id = :user_id", Order.class);
+                em.createQuery("select c from Cart c JOIN FETCH c.product p JOIN FETCH c.user u WHERE u.id = :user_id", Cart.class);
         query.setParameter("user_id", userId);
         return query.getResultList();
     }

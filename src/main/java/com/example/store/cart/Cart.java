@@ -26,22 +26,18 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    @Column(nullable = false)
-    private Integer orderQty;   // 주문 수량
-
     @Column
-    private Integer totalPrice;   // 구매 총 가격
+    private Integer orderQty;   // 주문 수량
 
 //    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Cart(Integer id, User user, Product product, Integer orderQty, Integer totalPrice, Timestamp createdAt) {
+    public Cart(Integer id, User user, Product product, Integer orderQty, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.product = product;
         this.orderQty = orderQty;
-        this.totalPrice = totalPrice;
         this.createdAt = createdAt;
     }
 }

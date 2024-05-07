@@ -7,9 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class CartController {
     @PostMapping("/cart/{id}/save")
     public String cartSave(@PathVariable Integer id, CartRequest.SaveDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        cartService.cartSaveProduct(id, sessionUser, reqDTO);
+        cartService.saveCart(id, sessionUser, reqDTO);
         return "redirect:/cart-list";
     }
 
@@ -42,10 +40,10 @@ public class CartController {
         request.setAttribute("cart", cart);
         return "cart/save-form";
     }
-
-    // 삭제하기 - 주문하면 삭제되고 어디로 반환돼야 하는지 모르겠어요
-    @PostMapping("/cart/{id}/delete")
-    public String delete() {
-        return "";
+    @PostMapping("/cart/update")
+    public @ResponseBody String update(@RequestBody List<CartRequest.UpdateDTO> updateDTOList) {
+        System.out.println(updateDTOList);
+        cartService.updateCart(updateDTOList);
+        return "구매를 진행하겠습니다.";
     }
 }

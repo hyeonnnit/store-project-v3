@@ -9,16 +9,21 @@ import lombok.Data;
 
 public class CartRequest {
     @Data
-    public static class SaveDTO{
+    public static class SaveDTO {
         private Integer orderQty;
-        private Integer totalPrice;
-        public Cart toEntity(User user, Product product){
+
+        public Cart toEntity(User user, Product product) {
             return Cart.builder()
                     .user(user)
                     .product(product)
                     .orderQty(orderQty)
-                    .totalPrice(totalPrice)
                     .build();
         }
+    }
+
+    @Data
+    public static class UpdateDTO {
+        private Integer cartId;
+        private Integer orderQty;
     }
 }

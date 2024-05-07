@@ -3,7 +3,7 @@
 <div class="container">
     <table class="table table-hover offer-table scroll" style="text-align: center; border-top:2px solid #ddd">
         <br>
-        <h2>상품 목록</h2>
+        <h2>주문 목록</h2>
         <br>
 
         <thead>
@@ -11,28 +11,27 @@
             <th class="center-align col-1">No</th>
             <th class="center-align col-5">상품명</th>
             <th class="center-align col-2">상품가격</th>
-            <th class="center-align col-2">상품수량</th>
-            <th class="center-align col-2">상세보기</th>
+            <th class="center-align col-2">구매수량</th>
+            <th class="center-align col-2">구매금액</th>
+            <th class="center-align col-2">주문결과</th>
         </tr>
         </thead>
-        {{#productList}}
-            <tbody>
-            <tr class="offer-table">
-                <th scope="row">{{id}}</th>
-                <td>{{name}}</td>
-                <td>{{price}}</td>
-                <td>{{qty}}</td>
-                <td>
-                    <div class="new-create-button">
-                        <form action="/product/{{id}}">
-                            <button type="submit" class="btn btn-outline-primary">상세보기</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        {{/productList}}
+
+        <tbody>
+        <tr class="offer-table">
+            <th scope="row">{{id}}</th>
+            <td>{{name}}</td>
+            <td>{{price}}</td>
+            <td>{{orderQty}}</td>
+            <td>{{totalPrice}}</td>
+            <td>{{status}}</td>
+        </tr>
+        </tbody>
     </table>
+    <div class="flex-fill">
+        <span style="padding-right: 40px;">합계 (원)</span>
+        <strong class="sum">{{sum}}</strong>
+    </div>
 </div>
 
 <div style="margin-bottom: 25%"></div>

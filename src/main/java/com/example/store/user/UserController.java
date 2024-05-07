@@ -23,7 +23,6 @@ public class UserController {
         return "redirect:/";
     }
 
-
     @GetMapping("/login-form")
     public String loginForm() {
         return "user/login-form";

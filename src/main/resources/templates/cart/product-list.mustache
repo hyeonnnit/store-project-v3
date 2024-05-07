@@ -1,39 +1,119 @@
 {{> layout/header}}
 
 <div class="container">
-
     <br>
     <ul class="row row-cols-4 gap-3">
         {{#cartList}}
-            <li class="card col border p-5 rounded m-3" style="width: 15rem; padding: 0px !important; border: 0">
-<!--                <a href="/order/id/detail" style="text-decoration: none; color: black">-->
-                    <div style="width: 100%; height: 15rem; overflow: hidden">
-                        <img src="/images/{{pic}}" class="card-img-top"/>
-                    </div>
+            <li class="card col border p-5 rounded m-3 my-offer-list" style="width: 15rem; padding: 0px !important; border: 0">
+                <!-- 체크박스 추가 시작 -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{cartId}}" id="check{{cartId}}">
+                    <label class="form-check-label" for="check{{cartId}}">
+                        선택
+                    </label>
+                </div>
+                <!-- 체크박스 추가 끝 -->
+                <div style="width: 100%; height: 15rem; overflow: hidden">
+                    <img src="/images/{{pic}}" class="card-img-top"/>
+                </div>
 
-                    <div class="card-body">
-                        <h5 class="card-title" style="
-                            display: -webkit-box;
-                            -webkit-line-clamp: 1;
-                            -webkit-box-orient: vertical;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                          "><b>{{name}}</b></h5>
-                        <h6><span>구매 금액</span> | <span>{{totalPrice}}원</span></h6>
-                        <h6><span>구매수량</span> | <span>{{orderQty}}</span></h6>
-                    </div>
-<!--                </a>-->
-<!--                <div class="d-flex justify-content-center">-->
-<!--                    <form action="/order/id/detail" style="width: 100%">-->
-<!--                        <button class="btn btn-outline-danger mb-3" style="width: 100%">상세보기</button>-->
-<!--                    </form>-->
-<!--                </div>-->
+                <div class="card-body">
+
+                    <h5 class="card-title" style="
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      "><b>{{name}}</b></h5>
+                    <h6><span>상품 가격</span> | <span>{{price}}원</span></h6>
+                    <h6><span>구매 수량</span> <span class="orderQty"><input type="number" value="{{orderQty}}"></span></h6>
+                </div>
             </li>
         {{/cartList}}
-
-
     </ul>
+    <div class="summary-list" style="width: 30%;">
+        <!-- 목록 리스트 1-->
+        <ul class="list-group mb-3">
+            <!-- 합계와 구매하기 버튼을 포함하는 항목 -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="flex-fill">
+                    <span style="padding-right: 40px;">합계 (원)</span>
+                    <strong class="sum">0</strong>
+                </div>
+                <form action="/order/{{id}}/save-form" method="get">
+                    {{#cartList}}
+                        <input type="hidden" name="productId" value="{{productId}}">
+                        <input type="hidden" name="orderQty" value="{{orderQty}}">
+                    {{/cartList}}
+                    <button type="submit" class="btn btn-primary" id="purchaseButton">구매하기</button>
+                </form>
+            </li>
+        </ul>
+    </div>
 </div>
+<script>
+    // 카트 리스트 배열 선언
+    let cartList = [];
+
+    // 총합을 계산하고 화면에 표시하는 함수
+    function calculateAndDisplayTotal() {
+        let total = 0;
+        let offerTable = document.querySelectorAll(".my-offer-list");
+
+        offerTable.forEach(value => {
+            let checkBox = value.querySelector("div.form-check > input[type='checkbox']");
+            if(checkBox.checked){
+                let price = parseInt(value.querySelector("h6 > span:nth-child(2)").textContent.replace('원', ''));
+                let orderQty = parseInt(value.querySelector(".orderQty > input").value);
+                total += price * orderQty;
+            }
+        });
+
+        document.querySelector(".sum").textContent = total.toLocaleString();
+    }
+
+    // 체크박스 클릭 시 총합 계산 로직 실행
+    document.querySelectorAll(".my-offer-list .form-check-input").forEach(checkbox => {
+        checkbox.addEventListener("click", calculateAndDisplayTotal);
+    });
+
+    // 구매하기 버튼 클릭 이벤트
+    document.querySelector("#purchaseButton").addEventListener("click", function (e) {
+        e.preventDefault();
+
+        let offerTable = document.querySelectorAll(".my-offer-list");
+
+        offerTable.forEach(value => {
+            let checkBox = value.querySelector("div.form-check > input[type='checkbox']");
+            if(checkBox.checked){
+                let cartId = checkBox.value;
+                let orderQty = value.querySelector(".orderQty > input").value;
+
+                let checkedCart = {
+                    cartId: cartId,
+                    orderQty: orderQty
+                };
+
+                cartList.push(checkedCart);
+            }
+        });
+
+        // AJAX 요청
+        $.ajax({
+            url: '/cart/update',
+            data: JSON.stringify(cartList),
+            contentType: 'application/json; charset=utf-8',
+            type: 'POST'
+        }).done((res)=>{
+            alert(`${res}`);
+            location.href = "/order/save-form"
+        }).fail((res)=>{
+            // 실패 처리
+        });
+    });
+</script>
+
 
 <div style="margin-bottom: 25%"></div>
 {{> layout/footer}}
