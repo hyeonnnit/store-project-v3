@@ -25,7 +25,7 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
-        ProductResponse.DetailDTO product = productService.getProductDetail(id);
+        Product product = productService.getProductDetail(id);
         request.setAttribute("product", product);
         return "product/detail";
     }
@@ -43,7 +43,7 @@ public class ProductController {
 
     @GetMapping("/product/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
-        ProductResponse.DetailDTO product = productService.getProductDetail(id);
+        Product product = productService.getProductDetail(id);
         request.setAttribute("product", product);
         return "product/update-form";
     }

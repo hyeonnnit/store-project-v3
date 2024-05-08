@@ -7,8 +7,8 @@
             <li class="card col border p-5 rounded m-3 my-offer-list" style="width: 15rem; padding: 0px !important; border: 0">
                 <!-- 체크박스 추가 시작 -->
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{cartId}}" id="check{{cartId}}">
-                    <label class="form-check-label" for="check{{cartId}}">
+                    <input class="form-check-input" type="checkbox" value="{{id}}" id="check{{id}}">
+                    <label class="form-check-label" for="check{{id}}">
                         선택
                     </label>
                 </div>
@@ -41,7 +41,7 @@
                     <span style="padding-right: 40px;">합계 (원)</span>
                     <strong class="sum">0</strong>
                 </div>
-                <form action="/order/{{id}}/save-form" method="get">
+                <form action="/order/{{id}}/save" method="post">
                     {{#cartList}}
                         <input type="hidden" name="productId" value="{{productId}}">
                         <input type="hidden" name="orderQty" value="{{orderQty}}">
@@ -107,7 +107,12 @@
             type: 'POST'
         }).done((res)=>{
             alert(`${res}`);
-            location.href = "/order/save-form"
+            let form = $('<form>', {
+                'method': 'POST',
+                'action': '/order/save'
+            });
+            $('body').append(form);
+            form.submit();
         }).fail((res)=>{
             // 실패 처리
         });

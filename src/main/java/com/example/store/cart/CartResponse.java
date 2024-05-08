@@ -32,7 +32,7 @@ public class CartResponse {
 
     @Data
     public static class ListDTO{
-        private int cartId;
+        private int id;
         private User user;
         private Integer productId;
         private String name;
@@ -42,7 +42,7 @@ public class CartResponse {
         private Integer orderQty;
 
         public ListDTO(Cart cart){
-            this.cartId = cart.getId();
+            this.id = cart.getId();
             this.user=cart.getUser();
             this.productId=cart.getProduct().getId();
             this.orderQty = cart.getOrderQty();

@@ -1,5 +1,6 @@
 package com.example.store.order;
 
+import com.example.store.cart.CartRequest;
 import com.example.store.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -18,15 +19,20 @@ public class OrderController {
     private final HttpSession session;
 
     // 주문 목록
-    @GetMapping({"/order/{id}/save-form"})
-    public String saveOrderList(@PathVariable Integer id, HttpServletRequest request, OrderRequest.SaveDTO reqDTO) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        List<OrderResponse.ListDTO> orderList = orderService.getOrderList(reqDTO,sessionUser,id);
+    @GetMapping("/order-list")
+    public String saveOrderList(HttpServletRequest request) {
+        List<OrderResponse.ListDTO> orderList = orderService.getOrderList();
         System.out.println(orderList);
         request.setAttribute("orderList", orderList);
-        return "order/save-form";
+        return "order/list";
     }
 
+    @PostMapping("/order/{id}/save")
+    public String saveOrder(@PathVariable Integer id, OrderRequest.SaveDTO saveDTO){
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        orderService.saveOrder(saveDTO,id,sessionUser);
+        return "redirect:/order-list";
+    }
     // 삭제하기
     @PostMapping("/order/{id}/delete")
     public String delete() {

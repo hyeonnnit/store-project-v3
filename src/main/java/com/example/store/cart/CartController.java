@@ -28,18 +28,14 @@ public class CartController {
 
     // 장바구니 담기
     @PostMapping("/cart/{id}/save")
-    public String cartSave(@PathVariable Integer id, CartRequest.SaveDTO reqDTO) {
+    public String cartSave(@PathVariable Integer id, CartRequest.SaveDTO reqDTO, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         cartService.saveCart(id, sessionUser, reqDTO);
+        Cart cart = cartService.getCart(id);
+        session.setAttribute("cart", cart);
         return "redirect:/cart-list";
     }
 
-    @GetMapping("/cart/{id}/save-form")
-    public String cartSaveForm(@PathVariable Integer id, HttpServletRequest request){
-        CartResponse.DetailDTO cart = cartService.getCartDetail(id);
-        request.setAttribute("cart", cart);
-        return "cart/save-form";
-    }
     @PostMapping("/cart/update")
     public @ResponseBody String update(@RequestBody List<CartRequest.UpdateDTO> updateDTOList) {
         System.out.println(updateDTOList);

@@ -21,11 +21,15 @@ public class OrderRepository {
 
     public List<Order> findByUserId(int id) {
         Query query =
-                em.createQuery("select o from Order o JOIN FETCH o.cart c JOIN FETCH o.user u WHERE o.id = :id");
+                em.createQuery("select o from Order o JOIN FETCH o.cart c join fetch c.product p join fetch c.user u WHERE o.id = :id");
         query.setParameter("id", id);
         return query.getResultList();
     }
-
+    public List<Order> findAll() {
+        Query query =
+                em.createQuery("select o from Order o order by o.id", Order.class);
+        return query.getResultList();
+    }
     public Order save(Order order){
         em.persist(order);
         return order;

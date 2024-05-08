@@ -9,7 +9,7 @@ public class OrderResponse {
     @Data
     public static class ListDTO{
         private Integer id;
-        private Cart cart;
+        private Integer cartId;
         private String name;
         private int price ;
         private int qty;
@@ -21,7 +21,7 @@ public class OrderResponse {
 
         public ListDTO(Order order){
             this.id = order.getId();
-            this.cart=order.getCart();
+            this.cartId=order.getCart().getId();
             this.name = order.getCart().getProduct().getName();
             this.price = order.getCart().getProduct().getPrice();
             this.qty = order.getCart().getProduct().getQty();

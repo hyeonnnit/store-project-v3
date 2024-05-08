@@ -35,9 +35,9 @@ public class CartService {
         cartRepository.save(cart);
         return cart;
     }
-    public CartResponse.DetailDTO getCartDetail(int id){
-        Cart cart = cartRepository.findByProductId(id);
-        return new CartResponse.DetailDTO(cart);
+    public Cart getCart(int id){
+        Cart cart = cartRepository.findById(id);
+        return cart;
     }
 
     public List<CartResponse.ListDTO> getCartList(int userId){

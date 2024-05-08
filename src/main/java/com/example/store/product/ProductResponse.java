@@ -39,14 +39,14 @@ public class ProductResponse {
 
     @Data
     public static class DetailDTO{
-        private int id;
+        private int productId;
         private String name;
         private int price ;
         private int qty;
         private String pic;
 
         public DetailDTO(Product product){
-            this.id = product.getId();
+            this.productId = product.getId();
             this.name = product.getName();
             this.price = product.getPrice();
             this.qty = product.getQty();

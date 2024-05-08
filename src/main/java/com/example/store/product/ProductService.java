@@ -13,12 +13,10 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
-    private final EntityManager em;
 
     //상품 상세 보기
-    public ProductResponse.DetailDTO getProductDetail(int id){
-        Product product = productRepository.findById(id);
-        return new ProductResponse.DetailDTO(product);
+    public Product getProductDetail(int id){
+        return productRepository.findById(id);
     }
 
     //상품 목록보기
