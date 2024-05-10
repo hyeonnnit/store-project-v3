@@ -25,5 +25,6 @@ public class CartRequest {
     public static class UpdateDTO {
         private Integer cartId;
         private Integer orderQty;
+        private boolean checkedBox;
     }
 }

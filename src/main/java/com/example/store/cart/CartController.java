@@ -6,6 +6,7 @@ import com.example.store.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class CartController {
     @GetMapping({"/cart-list"})
     public String list(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        List<CartResponse.ListDTO> cartList = cartService.getCartList(sessionUser.getId());
+        List<CartResponse.CartDTO> cartList = cartService.getCartList(sessionUser.getId());
         request.setAttribute("cartList", cartList);
         return "cart/product-list";
     }
@@ -31,15 +32,13 @@ public class CartController {
     public String cartSave(@PathVariable Integer id, CartRequest.SaveDTO reqDTO, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         cartService.saveCart(id, sessionUser, reqDTO);
-        Cart cart = cartService.getCart(id);
-        session.setAttribute("cart", cart);
         return "redirect:/cart-list";
     }
 
     @PostMapping("/cart/update")
-    public @ResponseBody String update(@RequestBody List<CartRequest.UpdateDTO> updateDTOList) {
+    public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> updateDTOList) {
         System.out.println(updateDTOList);
         cartService.updateCart(updateDTOList);
-        return "구매를 진행하겠습니다.";
+        return ResponseEntity.ok().body("구매를 진행하겠습니다.");
     }
 }

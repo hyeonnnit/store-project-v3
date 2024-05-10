@@ -1,6 +1,8 @@
 package com.example.store.order;
 
+import com.example.store.cart.Cart;
 import com.example.store.cart.CartRequest;
+import com.example.store.cart.CartResponse;
 import com.example.store.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -27,10 +29,10 @@ public class OrderController {
         return "order/list";
     }
 
-    @PostMapping("/order/{id}/save")
-    public String saveOrder(@PathVariable Integer id, OrderRequest.SaveDTO saveDTO){
+    @PostMapping("/order/save")
+    public String saveOrder(OrderRequest.SaveDTO saveDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        orderService.saveOrder(saveDTO,id,sessionUser);
+        orderService.saveOrder(saveDTO,sessionUser);
         return "redirect:/order-list";
     }
     // 삭제하기

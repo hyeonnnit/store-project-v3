@@ -29,14 +29,18 @@ public class Cart {
     @Column
     private Integer orderQty;   // 주문 수량
 
+    @Column
+    private boolean checkedBox;
+
 //    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Cart(Integer id, User user, Product product, Integer orderQty, Timestamp createdAt) {
+    public Cart(Integer id, boolean checkedBox, User user, Product product, Integer orderQty, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.product = product;
+        this.checkedBox = checkedBox;
         this.orderQty = orderQty;
         this.createdAt = createdAt;
     }

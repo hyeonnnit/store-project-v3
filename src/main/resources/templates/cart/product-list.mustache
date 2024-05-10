@@ -41,10 +41,11 @@
                     <span style="padding-right: 40px;">합계 (원)</span>
                     <strong class="sum">0</strong>
                 </div>
-                <form action="/order/{{id}}/save" method="post">
+                <form action="/order/save" method="post">
                     {{#cartList}}
                         <input type="hidden" name="productId" value="{{productId}}">
                         <input type="hidden" name="orderQty" value="{{orderQty}}">
+                        <input type="hidden" name="checkedBox" value="{{checkedBox}}">
                     {{/cartList}}
                     <button type="submit" class="btn btn-primary" id="purchaseButton">구매하기</button>
                 </form>
@@ -92,7 +93,8 @@
 
                 let checkedCart = {
                     cartId: cartId,
-                    orderQty: orderQty
+                    orderQty: orderQty,
+                    checkedBox: checkBox.checked ? true : false
                 };
 
                 cartList.push(checkedCart);

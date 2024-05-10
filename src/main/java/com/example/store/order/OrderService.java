@@ -25,12 +25,10 @@ public class OrderService {
     }
 
     @Transactional
-    public List<OrderResponse.ListDTO> saveOrder(OrderRequest.SaveDTO saveDTO, Integer id, User user) {
-        List<Order> orderList = new ArrayList<>();
-        Cart cart = cartRepository.findById(id);
+    public OrderResponse.DetailDTO saveOrder(OrderRequest.SaveDTO saveDTO, User user) {
+        Cart cart = cartRepository.findByCartUserId(user.getId());
         Order order = orderRepository.save(saveDTO.toEntity(user, cart));
-        orderList.add(order);
-        return orderList.stream().map(OrderResponse.ListDTO::new).collect(Collectors.toList());
+        return new OrderResponse.DetailDTO(order);
     }
 
 }
